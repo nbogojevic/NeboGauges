@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Radio Stack</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="keypad.css" />
+    <script type="text/javascript" src="keypad.js"></script>
+    <style>
+.outer-marker {
+    width: 48px;
+    height: 48px;
+    background: url(outer.png) 0 0;
+    background-size: 100% 100%;
+}     
+
+.middle-marker {
+    width: 48px;
+    height: 48px;
+    background: url(middle.png) 0 0;
+    background-size: 100% 100%;
+}     
+
+.inner-marker {
+    width: 48px;
+    height: 48px;
+    background: url(inner.png) 0 0;
+    background-size: 100% 100%;
+}     
+
+.dme-2 {
+    width: 101px;
+    height: 43px;
+    background: url(switch.png) 0 0;
+    background-size: 100% 200%;
+    pointer-events:none;
+}     
+
+.dme-1 {
+    width: 101px;
+    height: 43px;
+    background: url(switch.png) 0 100%;
+    background-size: 100% 200%;
+    pointer-events:none;
+}     
+
+#dmeswitch {
+    position: absolute;
+    top: 1350px;
+    left: 906px;
+}
+
+.knob-1 {
+    width: 82px;
+    height: 78px;
+    background: url(knob.png) 0 0;
+    background-size: 100% 200%;
+    pointer-events:none;
+}     
+
+.knob-0 {
+    width: 82px;
+    height: 78px;
+    background: url(knob.png) 0 100%;
+    background-size: 100% 200%;
+    pointer-events:none;
+}     
+
+#nav1ident {
+    position: absolute;
+    left: 826px;
+    top: 639px;
+}
+
+#nav2ident {
+    position: absolute;
+    left: 826px;
+    top: 1095px;
+}
+
+.light-1 {
+    width: 21px;
+    height: 20px;
+    background: url(light.png) 0 0;
+    background-size: 100% 100%;
+    pointer-events:none;
+}     
+
+.light-0 {
+    width: 21px;
+    height: 20px;
+    background-color: transparent;
+    pointer-events:none;
+}     
+
+#com1transmit {
+    position: absolute;
+    left: 420px;
+    top: 101px;
+}
+
+#com2transmit {
+    position: absolute;
+    left: 420px;
+    top: 196px;
+}
+
+#nav1sound {
+    position: absolute;
+    left: 554px;
+    top: 101px;
+}
+
+#nav2sound {
+    position: absolute;
+    left: 554px;
+    top: 196px;
+}
+
+#markersound {
+    position: absolute;
+    left: 766px;
+    top: 103px;
+}
+
+#adfsound {
+    position: absolute;
+    left: 905px;
+    top: 103px;
+}
+
+#dmesound {
+    position: absolute;
+    left: 1045px;
+    top: 104px;
+}
+
+#bthrecieve {
+    position: absolute;
+    left: 766px;
+    top: 196px;
+}
+
+.radio-freq {
+    position: absolute;
+    width: 200px;
+    height: 100px;
+}
+#adf {
+    position: absolute;
+    width: 300px;
+    height: 120px;
+    left: 150px;
+    top: 1670px;
+}
+#transponder {
+    position: absolute;
+    width: 400px;
+    height: 140px;
+    left: 300px;
+    top: 2000px;
+}
+#dme {
+    position: absolute;
+    width: 300px;
+    height: 120px;
+    left: 69px;
+    top: 1325px;
+}
+#dmespeed {
+    position: absolute;
+    width: 300px;
+    height: 120px;
+    left: 427px;
+    top: 1325px;
+}
+#com1act {
+    left: 75px;
+    top: 427px;
+}
+#com1stb {
+    left: 403px;
+    top: 427px;
+    cursor: pointer;
+}
+#com2act {
+    left: 75px;
+    top: 873px;
+}
+#com2stb {
+    left: 403px;
+    top: 873px;
+    cursor: pointer;
+}
+
+#nav1act {
+    left: 753px;
+    top: 427px;
+}
+
+#nav1stb {
+    left: 1050px;
+    top: 427px;
+    cursor: pointer;
+}
+
+#nav2act {
+    left: 753px;
+    top: 873px;
+}
+
+#nav2stb {
+    left: 1050px;
+    top: 873px;
+    cursor: pointer;
+}
+</style>
+
+<script type="text/javascript" src="segment-display.js"></script>
+<script src="../simulator.js"></script>
+<script type="text/javascript">
+
+var radio = {};
+
+function clickRadio(e) {
+    if (e.offsetX < e.target.clientWidth/2) {
+        setEvent(e.target.id + "_fract_dec_carry", 0);
+    } else {
+        setEvent(e.target.id + "_fract_inc_carry", 0);
+    }
+}
+
+function clickFastRadio(e) {
+    showKeyboard(e.target.id.substring(0, 4).toUpperCase() + "_STBY_SET");
+}
+
+function clickADF(e) {
+    if (e.offsetX < e.target.clientWidth/2) {
+        setEvent("ADF_FRACT_DEC_CARRY", 0);
+    } else {
+        setEvent("ADF_FRACT_INC_CARRY", 0);
+    }
+}
+
+function initPage() {
+    $(".radio-freq").each( (i,el) => radio[el.id] = confDisplay(el.id, "###.##", 7, "123.45"));
+    $(".radio-freq.standby").click(clickRadio);
+    $(".radio-freq.active").click(clickFastRadio);
+    frequencyEditor.display = confDisplay("enterfrequency", "###.###", 7, "123.455")
+    frequencyEditor.type = confDisplay("frequencytype", "   ####", 14, " NAV1")
+    radio.dme =confDisplay("dme", "###.# ##", 14, "---.- NM");
+    radio.dmespeed =confDisplay("dmespeed", "### ## #", 14, "--- KT");
+    radio.transponder = confDisplay("transponder", "####", 7, "0000");;
+    radio.adf = confDisplay("adf", "####.#", 7, "1234.5");
+    $("#adf").click(clickADF);
+    $im.start();
+}
+
+function bcdToMhz(nCom) {
+    return "1" + (nCom >> 12) + ((nCom >> 8) & 15) + "." + ((nCom >> 4) & 15) + (nCom & 15);
+}
+
+function navFreq(nav) {
+    return parseFloat(Math.round(nav * 100)/100).toFixed(2);
+}
+
+function adfFreq(adf) {
+    return "" + Math.floor(adf) + (Math.floor(adf * 10) % 10) + (Math.floor(adf * 100) % 10) + (Math.floor(adf * 1000) % 10) + "."  + (Math.round(adf * 10000) % 10)
+}
+
+function dmeDistance(dme) {
+    if (dme <= 0) {
+        return "---.- NM";
+    }
+    if (dme < 10) {
+        return "  "+ parseFloat(dme).toFixed(1)+" NM";
+    }
+    if (dme < 100) {
+        return " "+parseFloat(dme).toFixed(1)+" NM";
+    }
+    if (dme < 1000) {
+        return parseFloat(dme).toFixed(1)+" NM";
+    }
+    return "---.- NM";
+}
+
+function dmeSpeed(dmeSpeed) {
+    return dmeSpeed < 0 ? "--- KT" : ("" + ((dmeSpeed/100) % 10) + ((dmeSpeed/10) % 10) + (dmeSpeed% 10)) + " KT";
+}
+
+function setLight(object, data) {
+    $("#" + object).removeClass("light-0 light-1").addClass("light-" + (data ? 1 : 0));
+}
+
+$im.queryUrl = "/_radios";
+$im.readResult = (radioData) => {
+    radio.nav1act.setValue(navFreq(radioData.nav1act));
+    radio.com1act.setValue(bcdToMhz(radioData.com1act));
+    radio.nav2act.setValue(navFreq(radioData.nav2act));
+    radio.com2act.setValue(bcdToMhz(radioData.com2act));
+    radio.nav1stb.setValue(navFreq(radioData.nav1stb));
+    radio.com1stb.setValue(bcdToMhz(radioData.com1stb));
+    radio.nav2stb.setValue(navFreq(radioData.nav2stb));
+    radio.com2stb.setValue(bcdToMhz(radioData.com2stb));
+    radio.adf.setValue(adfFreq(radioData.adf1act));
+    radio.transponder.setValue(xpndrBox.code(radioData.transponder));
+    if (radioData.dmeselected == 2) {
+        radio.dme.setValue(dmeDistance(radioData.dme2dist));
+        radio.dmespeed.setValue(dmeSpeed(radioData.dme2speed));
+    } else {
+        radio.dme.setValue(dmeDistance(radioData.dme1dist));
+        radio.dmespeed.setValue(dmeSpeed(radioData.dme1speed));
+    }
+    setLight("bthrecieve", radioData.comRecieveAll);
+    setLight("com1transmit", radioData.com1transmit);
+    setLight("com2transmit", radioData.com2transmit);
+    setLight("nav1sound", radioData.nav1sound);
+    setLight("nav2sound", radioData.nav2sound);
+    setLight("adfsound", radioData.adf1sound);
+    setLight("dmesound", radioData.dmesound);
+    $("#nav1ident").removeClass('knob-0 knob-1)').addClass("knob-" + (radioData.nav1sound ? 1 : 0))
+    $("#nav2ident").removeClass('knob-0 knob-1)').addClass("knob-" + (radioData.nav2sound ? 1 : 0));
+    $("#dmeswitch").removeClass('dme-1 knob-2)').addClass("dme-" + radioData.dmeselected);
+}
+
+var pollFunction;
+
+function setEvent(event, value) {
+    $im.sendEvent(event.toUpperCase(), value);		
+}
+
+function confDisplay(id, pattern, segmentCount, value) {
+    var lcd = new SegmentDisplay(id);
+    lcd.pattern         = pattern;
+    lcd.displayAngle    = 8;
+    lcd.digitHeight     = 19;
+    lcd.digitWidth      = 10;
+    lcd.digitDistance   = 2.5;
+    lcd.segmentWidth    = 1.6;
+    lcd.segmentDistance = 0.3;
+    lcd.segmentCount    = segmentCount;
+    lcd.cornerType      = 3;
+    lcd.colorOn         = "#e90000";
+    lcd.colorOff        = "#422620";
+    lcd.draw();
+    lcd.setValue(value);
+    return lcd;
+}
+
+var xpndrBox = {
+    digitPos: 0,
+    digits: [0, 0, 0, 0],
+    digit: function (digit) {
+        xpndrBox.digits[xpndrBox.digitPos] = digit;
+        var transponderCode = (xpndrBox.digits[0] << 12) + (xpndrBox.digits[1] << 8) + (xpndrBox.digits[2]  << 4) + xpndrBox.digits[3];
+        
+        setEvent("XPNDR_SET", transponderCode)
+        xpndrBox.digitPos++;
+        if (xpndrBox.digitPos > 3) {
+            xpndrBox.digitPos = 0;
+        }
+    },
+    code: function(transponder) {
+        xpndrBox.digits[0] = (transponder >> 12);
+        xpndrBox.digits[1] = ((transponder >> 8) & 15);
+        xpndrBox.digits[2] = ((transponder >> 4) & 15);
+        xpndrBox.digits[3] = transponder & 15;
+        return "" + xpndrBox.digits[0] + xpndrBox.digits[1] + xpndrBox.digits[2] + xpndrBox.digits[3];
+    }
+}
+
+</script>
+</head>
+    <body onload="initPage()">
+        <div class="radio"><img src="radio.png" usemap="image-map">
+            <map name="image-map">
+                <area coords="255,634,345,679" shape="rect" onclick="setEvent('COM1_RADIO_SWAP', 0)">
+                <area coords="974,633,1065,681" shape="rect" onclick="setEvent('NAV1_RADIO_SWAP', 0)">
+                <area coords="255,1087,343,1133" shape="rect" onclick="setEvent('COM2_RADIO_SWAP', 0)">
+                <area coords="975,1085,1064,1133" shape="rect" onclick="setEvent('NAV2_RADIO_SWAP', 0)">
+                <area coords="42,2150,127,2300" shape="rect" onclick="xpndrBox.digit(0)">
+                <area coords="164,2150,257,2300" shape="rect" onclick="xpndrBox.digit(1)">
+                <area coords="290,2150,380,2300" shape="rect" onclick="xpndrBox.digit(2)">
+                <area coords="420,2150,510,2300" shape="rect" onclick="xpndrBox.digit(3)">
+                <area coords="550,2150,640,2300" shape="rect" onclick="xpndrBox.digit(4)">
+                <area coords="670,2150,760,2300" shape="rect" onclick="xpndrBox.digit(5)">
+                <area coords="790,2150,880,2300" shape="rect" onclick="xpndrBox.digit(6)">
+                <area coords="910,2150,800,2300" shape="rect" onclick="xpndrBox.digit(7)">
+
+                <area coords="60,415,268,508" shape="rect">
+                <area coords="62,874,276,965" shape="rect">
+                <area coords="732,415,937,515" shape="rect">
+                <area coords="737,873,939,969" shape="rect">
+
+                <area coords="874,668,42" shape="circle" onclick="setEvent('RADIO_VOR1_IDENT_TOGGLE', 0)">
+                <area coords="867,1132,37" shape="circle" onclick="setEvent('RADIO_VOR2_IDENT_TOGGLE', 0)">
+                <area coords="226,818,41" shape="circle">
+                <area coords="232,1287,41" shape="circle">
+
+                <area coords="331,70,449,141" shape="rect" onclick="setEvent('COM1_TRANSMIT_SELECT', 0)">
+                <area coords="334,169,446,228" shape="rect" onclick="setEvent('COM2_TRANSMIT_SELECT', 0)">
+                <area coords="472,71,590,143" shape="rect" onclick="setEvent('RADIO_VOR1_IDENT_TOGGLE', 0)">
+                <area coords="472,168,589,232" shape="rect" onclick="setEvent('RADIO_VOR2_IDENT_TOGGLE', 0)">
+                <area coords="680,71,796,139" shape="rect" onclick="setEvent('MARKER_SOUND_TOGGLE', 0)">
+                <area coords="684,172,797,230" shape="rect" onclick="setEvent('COM_RECEIVE_ALL_TOGGLE', 0)">
+                <area coords="821,73,937,139" shape="rect" onclick="setEvent('RADIO_ADF_IDENT_TOGGLE', 0)">
+                <area coords="960,73,1075,141" shape="rect" onclick="setEvent('RADIO_SELECTED_DME_IDENT_TOGGLE', 0)">
+                <area coords="813,1340,944,1391" shape="rect" onclick="setEvent('DME1_TOGGLE', 0)">
+                <area coords="947,1339,1085,1389" shape="rect" onclick="setEvent('DME2_TOGGLE', 0)">
+                <area coords="526,648,104" shape="circle" onclick="showKeyboard('COM1_STBY_SET')">
+                <area coords="1260,654,98" shape="circle" onclick="showKeyboard('NAV1_STBY_SET')">
+                <area coords="524,1111,102" shape="circle" onclick="showKeyboard('COM2_STBY_SET')">
+                <area coords="1258,1105,92" shape="circle" onclick="showKeyboard('NAV2_STBY_SET')">
+                <area coords="1272,1768,97" shape="circle" onclick="showKeyboard('ADF_COMPLETE_SET')">
+                <area coords="1255,2116,107" shape="circle" onclick="showKeyboard('XPNDR_SET')">
+                <area coords="1086,2195,1171,2237" shape="rect" onclick="setEvent('XPNDR_SET', 0)">
+                <area coords="239,1836,333,1886" shape="rect" onclick="setEvent('RADIO_ADF_IDENT_TOGGLE', 0)">
+                <area coords="273,2529,360,2632" shape="rect"onclick="setEvent('AP_HDG_HOLD', 0)">
+            </map>
+        </div>
+        <div class="light-1" id="com1transmit"></div>
+        <div class="light-1" id="com2transmit"></div>
+        <div class="light-1" id="nav1sound"></div>
+        <div class="light-1" id="nav2sound"></div>
+        <div class="light-1" id="dmesound"></div>
+        <div class="light-1" id="adfsound"></div>
+        <div class="light-1" id="markersound"></div>
+        <div class="light-1" id="bthrecieve"></div>
+        <div class="dme-1" id="dmeswitch"></div>
+        <div class="knob-1" id="nav1ident"></div>
+        <div class="knob-1" id="nav2ident"></div>
+        <canvas id="com1act" class="radio-freq active"></canvas>
+        <canvas id="com1stb" class="radio-freq standby"></canvas>
+        <canvas id="nav1act" class="radio-freq active"></canvas>
+        <canvas id="nav1stb" class="radio-freq standby"></canvas>
+        <canvas id="com2act" class="radio-freq active"></canvas>
+        <canvas id="com2stb" class="radio-freq standby"></canvas>
+        <canvas id="nav2act" class="radio-freq active"></canvas>
+        <canvas id="nav2stb" class="radio-freq standby"></canvas>
+        <canvas id="adf"></canvas>
+        <canvas id="dme"></canvas>
+        <canvas id="dmespeed"></canvas>
+        <canvas id="transponder"></canvas>
+
+        <div id="keypad" class="midnightKeypad keypad-popup">
+            <div class="keypad-row">
+                <button type="button" class="keypad-key" onclick="keyPressed(1)">1</button>
+                <button type="button" class="keypad-key" onclick="keyPressed(2)">2</button>
+                <button type="button" class="keypad-key" onclick="keyPressed(3)">3</button>
+                <canvas id="enterfrequency"></canvas>
+            </div>
+            <div class="keypad-row">
+                <button type="button" class="keypad-key" onclick="keyPressed(4)">4</button>
+                <button type="button" class="keypad-key" onclick="keyPressed(5)">5</button>
+                <button type="button" class="keypad-key" onclick="keyPressed(6)">6</button>
+                <canvas id="frequencytype"></canvas>
+            </div>
+            <div class="keypad-row">
+                <button type="button" class="keypad-key" onclick="keyPressed(7)">7</button>
+                <button type="button" class="keypad-key keypad-no-xpnd" onclick="keyPressed(8)">8</button>
+                <button type="button" class="keypad-key keypad-no-xpnd" onclick="keyPressed(9)">9</button>
+            </div>
+            <div class="keypad-row">
+                <button type="button" class="keypad-key" onclick="keyPressed(0)">0</button>
+                <button type="button" class="keypad-key keypad-clear" title="Erase all the text" onclick="clearPressed()">CLR</button>
+                <button type="button" class="keypad-key keypad-enter" title="Carriage return" onclick="enterPressed()">SET</button>
+                <button type="button" class="keypad-key keypad-close" title="Close the keypad" onclick="closePressed()">BCK</button>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:cc="http://web.resource.org/cc/"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    version="1.1"
+    viewBox="0 0 200 200"
+  >
+  <defs
+    >
+    <style
+      >text {
+        fill: #c6c6c6;
+        stroke: #000;
+        stroke-opacity: .8;
+        stroke-width: .5;
+        font-family: Arial, sans-serif;
+        font-size: 22px;
+      }</style
+    >
+    <linearGradient
+        id="base"
+      >
+      <stop
+          stop-color="#dadada"
+          offset="0"
+      />
+      <stop
+          stop-color="#212121"
+          offset="1"
+      />
+    </linearGradient
+    >
+    <radialGradient
+        id="outer-border-outer-fill"
+        cx=".175"
+        r=".65"
+        xlink:href="#base"
+        cy=".175"
+    />
+    <radialGradient
+        id="outer-border-inner-fill"
+        cx=".78"
+        r=".65"
+        xlink:href="#base"
+        cy=".78"
+    />
+    <radialGradient
+        id="outer-border-fill"
+        cx=".33"
+        r=".65"
+        xlink:href="#base"
+        cy=".33"
+    />
+    <filter
+        id="knob-shadow-filter"
+        color-interpolation-filters="sRGB"
+      >
+      <feGaussianBlur
+          stdDeviation="1"
+      />
+    </filter
+    >
+  </defs
+  >
+  <circle
+      cy="100"
+      cx="100"
+      r="100"
+      fill="url(#outer-border-outer-fill)"
+  />
+  <circle
+      cy="100"
+      cx="100"
+      r="96"
+      fill="url(#outer-border-inner-fill)"
+  />
+  <circle
+      cy="100"
+      cx="100"
+      r="95"
+      fill="url(#outer-border-fill)"
+  />
+  <circle
+      cy="100"
+      cx="100"
+      r="75"
+      fill="url(#outer-border-outer-fill)"
+  />
+  <circle
+      stroke-width="3"
+      stroke="#000"
+      cy="100"
+      cx="100"
+      r="70"
+      fill="#1c1c1c"
+  />
+
+  <path
+      d="m51 150a70.02 70.02 0 1 1 99 -99"
+      stroke-opacity=".1"
+      stroke="#fff"
+      stroke-linecap="round"
+      stroke-width="1.44"
+      fill="none"
+  />
+  <path
+      d="m51 148a65 65 0 1 0 97 -97"
+      stroke-opacity=".07"
+      stroke="#b2b2b2"
+      stroke-linecap="round"
+      stroke-width="1.44"
+      fill="none"
+  />
+</svg
+>

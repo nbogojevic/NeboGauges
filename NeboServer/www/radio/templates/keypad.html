@@ -1,0 +1,25 @@
+<div id="keypad" class="radio-keypad keypad-popup">
+    <div class="keypad-row">
+        <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(1)">1</button>
+        <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(2)">2</button>
+        <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(3)">3</button>
+        <canvas id="keypad-enterfrequency"></canvas>
+    </div>
+    <div class="keypad-row">
+        <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(4)">4</button>
+        <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(5)">5</button>
+        <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(6)">6</button>
+        <canvas id="keypad-frequencytype"></canvas>
+    </div>
+    <div class="keypad-row">
+        <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(7)">7</button>
+        <button type="button" class="keypad-key keypad-no-xpnd" onclick="$im.keypad.keyPressed(8)">8</button>
+        <button type="button" class="keypad-key keypad-no-xpnd" onclick="$im.keypad.keyPressed(9)">9</button>
+    </div>
+    <div class="keypad-row">
+        <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(0)">0</button>
+        <button type="button" class="keypad-key keypad-clear" title="Erase all the text" onclick="$im.keypad.clearPressed()">CLR</button>
+        <button type="button" class="keypad-key keypad-enter" title="Carriage return" onclick="$im.keypad.enterPressed()">SET</button>
+        <button type="button" class="keypad-key keypad-close" title="Close the keypad" onclick="$im.keypad.closePressed()">BCK</button>
+    </div>
+</div>

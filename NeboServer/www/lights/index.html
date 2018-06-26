@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!-- Nebo Dashboard by Nenad Bogojevic. Published under GPLv3 License. -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Light Switches - Nebo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../js/NoSleep.js"></script>
+    <script src="../simulator.js"></script>
+    <script type="text/javascript" src="lights.js"></script> 
+    <link rel="stylesheet" type="text/css" href="lights.css" />
+    </head>
+    <body>
+        <table class="panel">
+            <tr>
+                <td class="switch-label">&nbsp;</td>
+                <td class="switch-label">FUEL</td>
+                <td colspan=5 class="switch-label">&#x250e;&#x2501;&#x2501;&#x2501;&#x2501;&#x2501;&nbsp;LIGHTS&nbsp;&#x2501;&#x2501;&#x2501;&#x2501;&#x2501;&#x2501;&#x2512;</td>
+                <td class="switch-label">PITOT</td>
+                <td class="switch-label">&nbsp;</td>
+                <td class="switch-label">&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="switch-label">MASTER</td>
+                <td class="switch-label">PUMP</td>
+                <td class="switch-label">BCN</td>
+                <td class="switch-label">LAND</td>
+                <td class="switch-label">TAXI</td>
+                <td class="switch-label">NAV</td>
+                <td class="switch-label">STROBE</td>
+                <td class="switch-label">HEAT</td>
+                <td class="switch-label">AVIONICS</td>
+                <td class="switch-label">PANEL LT</td>
+            </tr>
+            <tr>
+                <td><center><div class="master off" id="MASTER">&nbsp;</div></center></td>
+                <td><center><div class="toggle off" id="PUMP">&nbsp;</div></center></td>
+                <td><center><div class="toggle off" id="BCN">&nbsp;</div></center></td>
+                <td><center><div class="toggle off" id="LAND">&nbsp;</div></center></td>
+                <td><center><div class="toggle off" id="TAXI">&nbsp;</div></center></td>
+                <td><center><div class="toggle off" id="NAV">&nbsp;</div></center></td>
+                <td><center><div class="toggle off" id="STROBE">&nbsp;</div></center></td>
+                <td><center><div class="toggle off" id="PITOT">&nbsp;</div></center></td>
+                <td><center><div class="white off" id="AVIONICS">&nbsp;</div></center>
+                </td>
+                <td>
+                    <center><div class="knob off" id="PANEL">&nbsp;</div></center>
+                </td>
+            </tr>
+            <tr>
+                <td class="switch-label">ALT BAT</td>
+                <td class="switch-label">OFF</td>
+                <td class="switch-label">OFF</td>
+                <td class="switch-label">OFF</td>
+                <td class="switch-label">OFF</td>
+                <td class="switch-label">OFF</td>
+                <td class="switch-label">OFF</td>
+                <td class="switch-label">OFF</td>
+                <td class="switch-label">MASTER</td>
+                <td class="switch-label">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan=2>
+                    <div id="MAGNETO" class="lock">
+                        <img src="img/lock.svg" class="lock-image">
+                        <img src="img/key-off.svg" class="lock-image magneto-0">
+                        <img src="img/key-l.svg" class="lock-image magneto-2" style="display: none;">
+                        <img src="img/key-r.svg" class="lock-image magneto-1" style="display: none;">
+                        <img src="img/key-both.svg" class="lock-image magneto-3" style="display: none;">
+                        <img src="img/key-ignition.svg" class="lock-image magneto-4" style="display: none;">
+                    </div>
+                </td> 
+                <td colspan=8>
+                </td> 
+            </tr>
+        </table>
+    </body>
+</html>

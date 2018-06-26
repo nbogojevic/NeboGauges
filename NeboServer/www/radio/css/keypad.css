@@ -1,0 +1,64 @@
+#keypad {
+    display: none;
+}
+
+#keypad-frequencytype {
+    width: 6vw;
+    height: 3vw;
+    vertical-align: middle;
+    padding-left: 1vw;
+}
+
+#keypad-enterfrequency {
+    width: 16vw;
+    height: 8vw;
+    vertical-align: middle;
+    padding-left: 1vw;
+}
+
+.radio-keypad { 
+    position: fixed;
+    background: black;  
+    top: 0; 
+    width: 70vw; 
+    left: 0; 
+    border-style: groove;
+    display: block;
+} 
+
+.radio-keypad .keypad-key { 
+    width: 15vw; 
+    height: 10vw; 
+    padding: 1vw; 
+	display: inline-block;
+    color: white; 
+    background: black;  
+    font-size: 3vw;
+    font-family: sans-serif;
+    cursor: pointer;
+}
+
+.radio-keypad button:disabled.keypad-key { 
+    color: black;
+    cursor: normal;  
+}
+
+.radio-keypad .keypad-enter {
+    color: black; 
+    background: antiquewhite;  
+}
+
+.radio-keypad button:disabled.keypad-enter { 
+    background: black;  
+    cursor: normal;  
+}
+
+.radio-keypad .keypad-close {
+    color: black; 
+    background: antiquewhite;  
+}
+
+.radio-keypad .keypad-clear {
+    color: black; 
+    background: antiquewhite;  
+}

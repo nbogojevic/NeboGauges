@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Skyhawk Flight Instruments Dashboard</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
+    <script src="js/jquery.flightindicators.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/flightindicators.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="instruments">
+        <div>
+            <div class="instrument" id="airspeed"></div>
+            <div class="instrument" id="attitude"></div>
+            <div class="instrument" id="altimeter"></div>            
+        </div>
+        <div>
+            <div class="instrument" id="turn_coordinator"></div>
+            <div class="instrument" id="heading"></div>
+            <div class="instrument" id="variometer"></div>
+        </div>
+    </div>
+
+	<script src="../simulator.js"></script>
+	<script src="dashboard.js"></script>
+    <script type="text/javascript">
+
+        var settings = {
+            off_flag: true,
+            size: 300,
+            showBox: false,
+            showScrews: true
+        };
+
+        var airspeed = $.flightIndicator('#airspeed', 'airspeed', settings);
+        var attitude = $.flightIndicator('#attitude', 'attitude', settings);
+        var altimeter = $.flightIndicator('#altimeter', 'altimeter', settings);
+        var turn_coordinator = $.flightIndicator('#turn_coordinator', 'turn_coordinator', settings);
+        var heading = $.flightIndicator('#heading', 'heading', settings);
+        var variometer = $.flightIndicator('#variometer', 'variometer', settings);
+
+        $im.readResult = (data) => {
+            altimeter.setAltitude(data.altitude);
+            altimeter.setPressure(1027, true);
+            airspeed.setAirSpeed(data.speed);
+            variometer.setVario(data.vspeed);
+            attitude.setPitch(-50*data.pitch);
+            attitude.setRoll(50*data.roll);
+            turn_coordinator.setSlip((data.turnball+127) / 256);
+            var turnrate = data.turnrate * 360;
+            if (turnrate < -45) {
+                turnrate = -45;
+            }
+            if (turnrate > 45) {
+                turnrate = 45;
+            }
+            turn_coordinator.setTurn(turnrate);
+		};
+
+
+    </script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+
+</html>

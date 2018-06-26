@@ -1,0 +1,12 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0  200 200" preserveAspectRatio="xMidYMid meet">
+   <defs>
+        <filter id="knob-shadow-filter" color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="1"/>
+        </filter>
+    </defs>
+    <rect x="80" y="22" fill="#000" id="key_wide" width="12" height="134" ry="2" rx="2" transform="rotate(-90, 86, 86)"/>
+    <rect x="78" y="36" fill="#000" width="16" height="100" ry="0" transform="rotate(-90, 86, 86)" rx="0"/>
+    <ellipse cx="68" cy="106" fill="#111" ry="60" rx="17" transform="rotate(-90, 86, 86)" filter="url(#knob-shadow-filter)" fill-opacity=".45" />
+</svg>

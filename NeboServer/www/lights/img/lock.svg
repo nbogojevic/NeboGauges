@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0  200 200" preserveAspectRatio="xMidYMid meet">
+    <style type="text/css" >
+        <![CDATA[
+            text.igintion-label {
+                font-family: sans-serif;
+                fill: #ddd;
+            }
+        ]]>
+    </style>
+    <defs id="svgEditorDefs">
+        <linearGradient gradientUnits="objectBoundingBox" id="lock-middle-fill" spreadMethod="pad" x1="0%" x2="100%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="silver"/>
+            <stop offset="100%" stop-color="white"/>
+        </linearGradient>
+        <linearGradient gradientUnits="objectBoundingBox" id="lock-outer-fill" spreadMethod="pad" x1="0%" x2="100%" y1="0%" y2="100%">
+            <stop offset="0%" style="stop-color: dimgray; stop-opacity: 0.84;"/>
+            <stop offset="100%" style="stop-color: silver; stop-opacity: 1;"/>
+        </linearGradient>
+        <linearGradient gradientUnits="objectBoundingBox" id="lock-inner-fill" spreadMethod="pad" x1="100%" x2="0%" y1="0%" y2="100%">
+            <stop offset="0%" style="stop-color: silver"/>
+            <stop offset="100%" style="stop-color: white"/>
+        </linearGradient>
+    </defs>
+    <text x="126" y="35" class="igintion-label">BOTH</text>
+    <text x="80" y="20" class="igintion-label">L</text>
+    <text x="30" y="35" class="igintion-label">R</text>
+    <text x="15" y="60"  class="igintion-label" style="writing-mode: tb; glyph-orientation-vertical: 0; text-orientation: upright;">OFF</text>
+    <text x="160" y="45"  class="igintion-label" style="writing-mode: tb; glyph-orientation-vertical: 0; text-orientation: upright;">START</text>
+    <circle id="outerCircle" cx="86" cy="86" style="fill:url(#lock-outer-fill);stroke:black;stroke-width:1px;" r="60" />
+    <circle id="middleCircle" cx="86" cy="86" style="fill:url(#lock-middle-fill);stroke:black;stroke-width:1px;" r="46" />
+    <circle id="innerCircle" cx="86" cy="86" style="fill:url(#lock-inner-fill);stroke:black;stroke-width:1px;" r="25" />
+</svg>

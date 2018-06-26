@@ -1,0 +1,19 @@
+<div class="panel">
+    <table style="width:100%">
+        <tr>
+            <td>&nbsp;</td>
+            <td class="labels">ADF</td>
+        </tr>
+        <tr>
+            <td><div class="display adf"><canvas id="adf"></canvas></div></td>
+            <td rowspan="2">
+                <img src="img/knob.svg" class="comm-knob" onclick="$im.keypad.show('ADF_COMPLETE_SET')">
+            </td>
+        </tr>
+        <tr>
+            <td >
+                <button id="adfident" onclick="$im.sendEvent('RADIO_ADF_IDENT_TOGGLE')" class="button" style="margin-left:5vw">ADF</button>
+            </td>
+        </tr>
+    </table>
+</div>

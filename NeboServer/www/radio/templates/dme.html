@@ -1,0 +1,22 @@
+<div class="panel">
+    <table style="width:100%">
+        <tr>
+            <td>&nbsp;</td>
+            <td colspan="2" class="labels" style="width:15vw"><center>DME</center></td>
+        </tr>
+        <tr>
+            <td style="width:80vw"><div class="display dme"><canvas id="dmedist"></canvas><canvas id="dmespeed"></canvas></div></td>
+            <td style="width:5vw;">
+                <center><span class="labels">1</span></center>  
+                <center><img onclick="$im.sendEvent('DME2_TOGGLE')" id="dmeswitch1" src="img/switch-dme-1.svg" style="width:3vw"><img onclick="$im.sendEvent('DME1_TOGGLE')" id="dmeswitch2" src="img/switch-dme-2.svg" style="width:3vw; display:none;"></center>
+                <center><span class="labels">2</span></center>
+            </td>
+            <td style="width:10vw;">
+                <img src="img/knob.svg" style="width:10vw">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">&nbsp;</td>
+        </tr>
+    </table>
+</div>

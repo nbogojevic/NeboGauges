@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" 
+    xmlns:cc="http://creativecommons.org/ns#" 
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+    xmlns:svg="http://www.w3.org/2000/svg" 
+    xmlns="http://www.w3.org/2000/svg" 
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" 
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="svg8" version="1.1" viewBox="0 0 152.34167 139.67358" height="139.67358mm" width="152.34167mm" sodipodi:docname="powerbutton-off.svg" inkscape:version="0.92.1 r15371">
+    <sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="1366" inkscape:window-height="706" id="namedview4504" showgrid="false" inkscape:zoom="0.44705423" inkscape:cx="287.88978" inkscape:cy="263.95008" inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1" inkscape:current-layer="layer1" />
+    <defs id="defs2987">
+        <linearGradient id="redGradientOff" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop stop-color="#ca1a2a" offset="0" />
+            <stop stop-color="#86111d" offset="1" />
+        </linearGradient>
+        <linearGradient id="redGradientOn" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop stop-color="#ca1a2a" offset="0" />
+            <stop stop-color="#9a1a2a" offset="1" />
+        </linearGradient>
+
+    </defs>
+
+    <g id="layer1">
+        <rect stroke-linejoin="round" rx="3" ry="3" height="116" width="86" stroke="#666" y="2" x="2" stroke-width="3" fill="#3c3c3c"/>
+
+        <rect y="10" x="10" height="100" width="35"  
+            style="opacity:1;fill:#ca1a2a;fill-opacity:1;stroke:#111111;stroke-width:3;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <rect 
+            style="stroke:#111111;stroke-width:2;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" 
+            fill="url(#redGradientOff)" 
+            width="35" height="80" y="30" x="10" />
+        <rect y="10" x="45" height="100" width="35" 
+            style="opacity:1;fill:#ca1a2a;fill-opacity:1;stroke:#111111;stroke-width:3;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <rect 
+            style="stroke:#111111;stroke-width:2;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" 
+            fill="url(#redGradientOn)" 
+            width="35" height="80" y="10" x="45" />
+    </g>
+</svg>
