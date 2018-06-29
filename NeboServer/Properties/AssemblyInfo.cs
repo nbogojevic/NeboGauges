@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Nebo Server")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Nebo")]
+[assembly: AssemblyCompany("Nenad Bogojevic")]
 [assembly: AssemblyProduct("Nebo Server")]
 [assembly: AssemblyCopyright("Copyright © Nenad Bogojevic 2018")]
 [assembly: AssemblyTrademark("")]

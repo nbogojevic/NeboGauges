@@ -5,8 +5,9 @@ function initPage() {
     $(".knob").click(toggleClick);
     $("#MASTER").click(masterClick);
     $("#MAGNETO").click(magnetoClick);
-    $im.queryUrl = "/_switches";
-    $im.start();
+    $im.start({
+        Switches: readResult
+    });
 }
 
 var magneto_switch = 0;
@@ -18,45 +19,35 @@ function magnetoStopIgnition() {
     }
 }
 function magnetoClick(e) {
-    if ($im.updateAllowed()) {
-        var left = e.offsetX < e.target.clientWidth/2; 
-        console.log(left);
-        var prev = magneto_switch;
-        if (left && magneto_switch > 0) {
-            $im.sendEvent("MAGNETO_DECR", 1);
-            magneto_switch--;
-        } else if (magneto_switch < 4) {
-            magneto_switch++;
-            if (magneto_switch == 4) {
-                setTimeout(magnetoStopIgnition, 1000);
-            }
-            $im.sendEvent("MAGNETO_INCR", 1);
-        } else {
-            return;
+    var left = e.offsetX < e.target.clientWidth/2; 
+    if (left && magneto_switch > 0) {
+        $im.sendEvent("MAGNETO_DECR", 1);
+        magneto_switch--;
+    } else if (magneto_switch < 4) {
+        magneto_switch++;
+        if (magneto_switch == 4) {
+            $(".magneto-4").show();
+            $(".magneto-3").hide();
+            setTimeout(magnetoStopIgnition, 1000);
         }
-        $(".magneto-"+prev).hide();
-        $(".magneto-"+magneto_switch).show();
+        $im.sendEvent("MAGNETO_INCR", 1);
+    } else {
+        return;
     }
 }
 
 var master_switch = 0;
 
 function masterClick(e) {
-    if ($im.updateAllowed()) {
-        var left = e.offsetX < e.target.clientWidth/2; 
-        if (left) {
-            if (master_switch == 0) {
-                masterSet(2);
-                $im.chainEvent("BATTERY").always( () =>
-                    $im.sendEvent("ALTERNATOR"));
-            } else {
-                masterSet(master_switch !== 2 ? 2 : 1);
-                $im.sendEvent("ALTERNATOR");
-            }
+    var left = e.offsetX < e.target.clientWidth/2; 
+    if (left) {
+        if (master_switch == 0) {
+            $im.sendEvent("BATTERY").always( function () { $im.sendEvent("ALTERNATOR") });
         } else {
-            masterSet(master_switch == 0 ? 1 : 0);
-            $im.sendEvent("BATTERY");
+            $im.sendEvent("ALTERNATOR");
         }
+    } else {
+        $im.sendEvent("BATTERY");
     }
 }
 
@@ -66,10 +57,8 @@ function masterSet(value) {
 }
 
 function toggleClick(e) {
-    if ($im.updateAllowed()) {
-        toggleSet(e.target.id, $(e.target).hasClass("off"))
-        $im.sendEvent(e.target.id);
-    }
+    toggleSet(e.target.id, $(e.target).hasClass("off"))
+    $im.sendEvent(e.target.id);
 }
 
 function toggleSet(id, value) {
@@ -86,7 +75,7 @@ function toggleLights(switches_status) {
     // document.getElementById('cabinlights').checked = definition.lights & 0x0200;
 }
 
-$im.readResult = (switches_status) => {
+function readResult(switches_status) {
     toggleLights(switches_status);
     toggleSet("PITOT", switches_status.pitot);
     toggleSet("PUMP", switches_status.pump);

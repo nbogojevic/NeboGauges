@@ -21,19 +21,44 @@ Published under GPLv3 License.
 </head>
 
 <body>
-
 	<div>
-		<span id="heading"></span>
+		<span id="heading"  ></span>
 	</div>
+    <p>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/switches/index.html">LIGHTS</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/radio/index.html">RADIO</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/dashboard.html">DASHBOARD</a>
+
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_airspeed.html">AIRSPEED</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_attitude.html">HORIZON</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_altimeter.html">ALTIMETER</a>
+
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_turn_cordinator.html">TURN</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_heading.html">HEADING</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_vario_meter.html">VARIO</a>
+
+        <button class="btn btn-outline-danger btn-lg btn-block disable-lock" data-toggle="button">Disable Lock</button>
+    </p>
+
 
 	<script src="../simulator.js"></script>
 	<script src="dashboard.js"></script>
     <script type="text/javascript">
 
-		var heading = $.flightIndicator('#heading', 'heading', { size:$im.maxSize, heading:150, 'beacononeshow': true, 'beacontwoshow': true});
-
+		var heading = $.flightIndicator('#heading', 'heading', { size:$im.maxSize, heading:12, 'beacononeshow': true, 'beacontwoshow': true});
+        
+        function clickHeading(e) {
+            if (e.offsetX < 827*$im.maxSize/947 && e.offsetX > 727*$im.maxSize/947) {
+                if (e.offsetY < 827*$im.maxSize/947 && e.offsetY > 727*$im.maxSize/947) {
+                    console.log(""+e.offsetX + " " +e.offsetY + " " +e.target.clientWidth+ " " +e.target.clientHeight+" "+$im.maxSize);
+                }
+            }
+        }
+        $("#heading").click(clickHeading);
 		$im.readResult = (data) => {
-                // heading.setVario(data.vspeed);
+            heading.setHeading(data.heading);
+            heading.setBeaconOne(data.navRadial, true);
+            heading.setBeaconTwo(data.adfRadial, true);
 		};
 	</script>
 

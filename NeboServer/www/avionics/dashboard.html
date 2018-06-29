@@ -29,6 +29,24 @@
             <div class="instrument" id="variometer"></div>
         </div>
     </div>
+    <p>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/switches/index.html">LIGHTS</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/radio/index.html">RADIO</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/dashboard.html">DASHBOARD</a>
+
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_airspeed.html">AIRSPEED</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_attitude.html">HORIZON</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_altimeter.html">ALTIMETER</a>
+
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_turn_cordinator.html">TURN</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_heading.html">HEADING</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_vario_meter.html">VARIO</a>
+
+        <button class="btn btn-outline-danger btn-lg btn-block disable-lock" data-toggle="button">Disable Lock</button>
+
+        <a class="btn btn-outline-info btn-lg btn-block" href="/index.html">HOME</a>
+    </p>
+
 
 	<script src="../simulator.js"></script>
 	<script src="dashboard.js"></script>
@@ -55,6 +73,9 @@
             variometer.setVario(data.vspeed);
             attitude.setPitch(-50*data.pitch);
             attitude.setRoll(50*data.roll);
+            heading.setHeading(data.heading);
+            heading.setBeaconOne(data.navRadial, true);
+            heading.setBeaconTwo(data.adfRadial, true);
             turn_coordinator.setSlip((data.turnball+127) / 256);
             var turnrate = data.turnrate * 360;
             if (turnrate < -45) {

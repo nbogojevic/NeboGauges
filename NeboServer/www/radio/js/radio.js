@@ -1,23 +1,5 @@
 
 $im.radio = {
-    setupDisplay: function (id, pattern, value, options) {
-        options = options || {};
-        var display = new SegmentDisplay(id);
-        display.pattern         = pattern;
-        display.displayAngle    = 0;
-        display.digitHeight     = options.digitHeight || 19;
-        display.digitWidth      = options.digitWidth || 10;
-        display.digitDistance   = 2.5;
-        display.segmentWidth    = options.segmentWidth || 1.6;
-        display.segmentDistance = 0.3;
-        display.segmentCount    = options.segmentCount || 7;
-        display.cornerType      = 3;
-        display.colorOn         = "#e90000";
-        display.colorOff        = "#422620";
-        display.draw();
-        display.setValue(value);
-        return display;
-    },
     adfFreq: function(adf) {
         return "" + Math.floor(adf) + (Math.floor(adf * 10) % 10) + (Math.floor(adf * 100) % 10) + (Math.floor(adf * 1000) % 10) + "."  + (Math.round(adf * 10000) % 10)
     },
@@ -65,31 +47,31 @@ $im.radio = {
     },
     setupComm(id, template) {
         $im.appendTemplate(template.replace(/{id}/g, id));
-        $im.radio["com"+id+"act"] = $im.radio.setupDisplay("com"+id+"act", "###.##", "123.45");
-        $im.radio["com"+id+"stb"] = $im.radio.setupDisplay("com"+id+"stb", "###.##", "123.45");
-        $im.radio["nav"+id+"act"] = $im.radio.setupDisplay("nav"+id+"act", "###.##", "123.45");
-        $im.radio["nav"+id+"stb"] = $im.radio.setupDisplay("nav"+id+"stb", "###.##", "123.45");   
+        $im.radio["com"+id+"act"] = $im.setupDisplay("com"+id+"act", "###.##", "123.45");
+        $im.radio["com"+id+"stb"] = $im.setupDisplay("com"+id+"stb", "###.##", "123.45");
+        $im.radio["nav"+id+"act"] = $im.setupDisplay("nav"+id+"act", "###.##", "123.45");
+        $im.radio["nav"+id+"stb"] = $im.setupDisplay("nav"+id+"stb", "###.##", "123.45");   
     },
 
     loadAdf: function() {
         return $im.template("templates/adf.html", (template) => {
             $im.appendTemplate(template);
-            $im.radio["adf"] = $im.radio.setupDisplay("adf", "####.#", "0123.4")
+            $im.radio["adf"] = $im.setupDisplay("adf", "####.#", "0123.4")
         });
 
     },
     loadDme: function() {
         return $im.template("templates/dme.html", (template) => {
             $im.appendTemplate(template);
-            $im.radio["dmedist"] = $im.radio.setupDisplay("dmedist", "###.###", "---.-NM", {segmentCount: 14, digitHeight: 22})
-            $im.radio["dmespeed"] = $im.radio.setupDisplay("dmespeed", "#####", "---KT", {segmentCount: 14, digitHeight: 19, segmentWidth: 1.6, digitWidth: 11})
+            $im.radio["dmedist"] = $im.setupDisplay("dmedist", "###.###", "---.-NM", {segmentCount: 14, digitHeight: 22})
+            $im.radio["dmespeed"] = $im.setupDisplay("dmespeed", "#####", "---KT", {segmentCount: 14, digitHeight: 19, segmentWidth: 1.6, digitWidth: 11})
         });
 
     },
     loadXpdr: function() {
         return $im.template("templates/xpdr.html", (template) => {
             $im.appendTemplate(template);
-            $im.radio["xpdr"] = $im.radio.setupDisplay("xpdr", "####", "1234");
+            $im.radio["xpdr"] = $im.setupDisplay("xpdr", "####", "1234");
         });
 
     },
@@ -118,16 +100,11 @@ $im.radio = {
         if ($im.radio.configuration.xpdr) { 
             loadPromise = loadPromise.then($im.radio.loadXpdr);
         }
-        loadPromise.then($im.start);
+        loadPromise.then(function() { $im.start({ Radio: $im.radio.onData }); });
     }
 };
 
-$().ready(() => {
-    $im.queryUrl = "/_radios";
-    $im.readResult = $im.radio.onData;
-    $im.interval = 500;
-    $im.radio.onLoad();
-});
+$().ready($im.radio.onLoad);
 
 $im.xpdrBox = {
     digitPos: 0,

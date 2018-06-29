@@ -26,6 +26,10 @@ Published under GPLv3 License.
         <span id="airspeed"></span>
     </div>
     <p>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/switches/index.html">LIGHTS</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/radio/index.html">RADIO</a>
+        <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/dashboard.html">DASHBOARD</a>
+
         <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_airspeed.html">AIRSPEED</a>
         <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_attitude.html">HORIZON</a>
         <a class="btn btn-outline-info btn-lg btn-block" href="/avionics/instrument_altimeter.html">ALTIMETER</a>
@@ -37,14 +41,14 @@ Published under GPLv3 License.
         <button class="btn btn-outline-danger btn-lg btn-block disable-lock" data-toggle="button">Disable Lock</button>
     </p>
 
-    <script src="../js/NoSleep.js"></script>
+
 	<script src="../simulator.js"></script>
 	<script src="dashboard.js"></script>
     <script type="text/javascript">
 
         var airspeed = $.flightIndicator('#airspeed', 'airspeed', {size:$im.maxSize});
 
-		$im.readResult = (data) => {
+		$im.readResult = function (data) {
             airspeed.setAirSpeed(data.speed);
 		};
     </script>
