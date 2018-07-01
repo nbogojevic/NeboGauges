@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Microsoft.FlightSimulator.SimConnect;
-using Unosquare.Labs.EmbedIO;
-using Unosquare.Labs.EmbedIO.Modules;
-using Unosquare.Labs.EmbedIO.Constants;
-using Unosquare.Net;
-using Unosquare.Swan.Formatters;
 
 namespace Nebo
 {
@@ -172,23 +166,24 @@ namespace Nebo
 
     static class NeboSimConnectExtension
     {
-        internal static void Configure(this SimConnect simConnect, ILog log)
+        internal static void Configure(this SimConnect simConnect, Action reconnect, Action<string> log)
         {
             try
             {
                 // listen to connect and quit msgs
-                simConnect.OnRecvOpen += new SimConnect.RecvOpenEventHandler((sender, data) => log?.Notify("Connected to flight simulator"));
+                simConnect.OnRecvOpen += new SimConnect.RecvOpenEventHandler((sender, data) => log?.Invoke("Connected to flight simulator"));
                 simConnect.OnRecvQuit += new SimConnect.RecvQuitEventHandler((sender, data) =>
                 {
-                    log?.Notify("Flight simulator has exited");
+                    log?.Invoke("Flight simulator has exited");
                     NeboContext.Instance.CloseConnection();
+                    reconnect?.Invoke();
                 });
                 simConnect.OnRecvSystemState += new SimConnect.RecvSystemStateEventHandler((sender, data) => { });
 
                 // listen to exceptions
                 simConnect.OnRecvException += new SimConnect.RecvExceptionEventHandler((sender, data) =>
                 {
-                    log?.Notify($"Exception received from flight simulator { Enum.GetName(typeof(SIMCONNECT_EXCEPTION), (SIMCONNECT_EXCEPTION)data.dwException) }");
+                    log?.Invoke($"Exception received from flight simulator { Enum.GetName(typeof(SIMCONNECT_EXCEPTION), (SIMCONNECT_EXCEPTION)data.dwException) }");
                 });
                 // define a data structure
                 simConnect.AddToDataDefinition(DataDefinitions.Dashboard, "PLANE PITCH DEGREES", "Radians", SIMCONNECT_DATATYPE.FLOAT32, 0.0f, SimConnect.SIMCONNECT_UNUSED);
@@ -321,7 +316,8 @@ namespace Nebo
             }
             catch (COMException ex)
             {
-                log?.Notify($"Exception occured while connecting to simulator {ex.Message}");
+                log?.Invoke($"Exception occured while connecting to simulator {ex.Message}");
+                reconnect?.Invoke();
             }
         }
     }

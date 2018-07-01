@@ -15,7 +15,7 @@ using Unosquare.Labs.EmbedIO.Constants;
 
 namespace Nebo
 {
-    public partial class NeboForm : Form, ILog
+    public partial class NeboForm : Form
     {
 
         public NeboForm(int port, string dir)
@@ -27,7 +27,7 @@ namespace Nebo
 
             NeboContext.Instance.WebServer = new NeboServer(port, dir);
 
-            NeboContext.Instance.ConnectToSim(Handle, this);
+            NeboContext.Instance.ConnectToSim(Handle, Notify, () => reconnectTimer.Start());
         }
 
         // simconnect processing on the main thread.
@@ -51,12 +51,6 @@ namespace Nebo
             notifyIconServer.Dispose();
         }
 
-        public void Log(string s)
-        {
-            lastTimestamp.Text = DateTime.Now.ToString();
-            lastStatus.Text = s;
-        }
-
         public void Notify(string s)
         {
             lastTimestamp.Text = DateTime.Now.ToString();
@@ -69,7 +63,10 @@ namespace Nebo
 
         private void timer_click(object sender, EventArgs e)
         {
-            NeboContext.Instance.ConnectToSim(Handle, this);
+            if (NeboContext.Instance.ConnectToSim(Handle, Notify, () => reconnectTimer.Start()))
+            {
+                reconnectTimer.Stop();
+            }
         }
 
         private void notifyIconServer_Click(object sender, EventArgs e)

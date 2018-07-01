@@ -128,21 +128,11 @@ namespace Nebo
         protected override void OnMessageReceived(WebSocketContext context, byte[] rxBuffer, WebSocketReceiveResult rxResult)
         {
             var result = System.Text.Encoding.UTF8.GetString(rxBuffer);
-            if (result.StartsWith("subscribe:"))
+            DataRequests feed = (DataRequests)Enum.Parse(typeof(DataRequests), result);
+            subscribers[feed].Add(context);
+            if (!NeboContext.Instance.Polling[feed].Running)
             {
-                DataRequests requestToSubscribe = (DataRequests)Enum.Parse(typeof(DataRequests), result.Substring("subscribe:".Length).Trim());
-                if (!NeboContext.Instance.Polling[requestToSubscribe].Running)
-                {
-                    NeboContext.Instance.Polling[requestToSubscribe].Start();
-                }
-                HashSet<WebSocketContext> existingSubscribers = subscribers[requestToSubscribe];
-                existingSubscribers.Add(context);
-            }
-            else if (result.StartsWith("unsubscribe:"))
-            {
-                DataRequests requestToUnSubscribe = (DataRequests)Enum.Parse(typeof(DataRequests), result.Substring("unsubscribe:".Length).Trim());
-                HashSet<WebSocketContext> existingSubscribers = subscribers[requestToUnSubscribe];
-                existingSubscribers.Remove(context);
+                NeboContext.Instance.Polling[feed].Start();
             }
         }
         /// <summary>

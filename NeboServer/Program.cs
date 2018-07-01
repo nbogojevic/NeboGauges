@@ -7,12 +7,6 @@ using System.Windows.Forms;
 
 namespace Nebo
 {
-    interface ILog
-    {
-        void Log(string text);
-        void Notify(string text);
-    }
-
     static class Program
     {
         /// <summary>
