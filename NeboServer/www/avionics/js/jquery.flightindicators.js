@@ -176,7 +176,7 @@ Published under GPLv3 License.
                 try {
                     placeholder.each(function(){
                         var i = this;
-                        d3.xml(settings.img_directory + "turn_ball_path.svg", "image/svg+xml", function(xml) {
+                        d3.xml(settings.img_directory + "turn_ball_path.svg", function(error, xml) {
                             $(i).find('div.instrument.turn div.turn_ball_path').append(xml.documentElement);
                         });
                     });

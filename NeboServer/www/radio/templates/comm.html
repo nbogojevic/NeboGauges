@@ -1,11 +1,50 @@
+<style>    
+.display.com {
+    min-height: 10vw;
+    width: 94vw;
+    margin-left: 2vw;
+    margin-top: 1vw;
+}
+
+.comact {
+    position: absolute;
+    top: 1vw;
+    left: 2vw;
+    width: 15vw;
+    height: 8vw;
+}
+.comstb {
+    position: absolute;
+    top: 1vw;
+    left: 22vw;
+    width: 15vw;
+    height: 8vw;
+}
+
+.navact {
+    position: absolute;
+    top: 1vw;
+    left: 50vw;
+    width: 15vw;
+    height: 8vw;
+}
+
+.navstb {
+    position: absolute;
+    top: 1vw;
+    left: 70vw;
+    width: 15vw;
+    height: 8vw;
+}
+</style>
 <div class="panel">
     <table style="width:100%">
         <tr>
             <td colspan="6"><div class="display com">
-                <canvas id="com{id}act" class="radio-freq active comact"></canvas>
-                <canvas id="com{id}stb" class="radio-freq standby comstb"></canvas>
-                <canvas id="nav{id}act" class="radio-freq active navact"></canvas>
-                <canvas id="nav{id}stb" class="radio-freq standby navstb"></canvas>
+                <canvas id="com{id}act" class="radio-freq active comact segmentDisplay" data-segmentDisplay='{"value":"123.45", "pattern":"###.##"}'></canvas>
+                <canvas id="com{id}stb" class="radio-freq standby comstb segmentDisplay" data-segmentDisplay='{"value":"123.45", "pattern":"###.##"}'></canvas>
+                <canvas id="nav{id}act" class="radio-freq active navact segmentDisplay" data-segmentDisplay='{"value":"123.45", "pattern":"###.##"}'></canvas>
+                <canvas id="nav{id}stb" class="radio-freq standby navstb segmentDisplay" data-segmentDisplay='{"value":"123.45", "pattern":"###.##"}'></canvas>
             </div></td>
         </tr>
         <tr>
@@ -18,7 +57,7 @@
                 <button onclick="$im.sendEvent('COM{id}_RADIO_SWAP')" class="button on" style="margin-left:5vw">&#8596;</button>
             </td>
             <td>
-                <img src="img/knob.svg" class="comm-knob" onclick="$im.keypad.show('COM{id}_STBY_SET')">
+                <img src="img/knob.svg" class="knob com" onclick="$im.keypad.show('COM{id}_STBY_SET')">
             </td>
             <td style="padding-left:2vw; vertical-align: text-top;">
                 <span class="labels">NAV{id}</span>
@@ -28,7 +67,7 @@
                 <button onclick="$im.sendEvent('NAV{id}_RADIO_SWAP')" class="button on" style="margin-left:5vw">&#8596;</button>
             </td>
             <td>
-                <img src="img/knob.svg" class="comm-knob" onclick="$im.keypad.show('NAV{id}_STBY_SET')">
+                <img src="img/knob.svg" class="knob com" onclick="$im.keypad.show('NAV{id}_STBY_SET')">
             </td>
         </tr>
     </table>

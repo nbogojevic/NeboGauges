@@ -5,18 +5,15 @@
 <head>
     <title>Nebo COMM1</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="js/segment-display.js"></script>
-    <script type="text/javascript" src="../simulator.js"></script>
+    <script type="text/javascript" src="/simulator.js"></script>
     <script type="text/javascript" src="js/radio.js"></script>
     <link rel="stylesheet" type="text/css" href="css/radio.css" />
-    <script type="text/javascript" src="js/keypad.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/keypad.css" />
-    <script>
-        $im.radio.configuration = {comm1: true};
-    </script>
 </head> 
 
 <body>
+    <div class="nebo-template" data-template="templates/comm.html" data-parameters='{"id":1}'></div>
+    <div id="gaugeSelector"></div>
+    <div class="nebo-template" data-template="templates/keypad.html"></div>
 </body>
 
 </html>

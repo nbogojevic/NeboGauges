@@ -8,6 +8,14 @@ By Sébastien Matton (seb_matton@hotmail.com)
 Published under GPLv3 License.
 */
 
+body {
+  background: #444547;
+}
+
+div.gauge {
+  text-align: center;
+}
+
 /* Global block of an indicator*/
 div.instrument {
   position: relative;

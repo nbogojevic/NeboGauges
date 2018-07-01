@@ -3,13 +3,13 @@
         <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(1)">1</button>
         <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(2)">2</button>
         <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(3)">3</button>
-        <canvas id="keypad-enterfrequency"></canvas>
+        <canvas id="keypadFrequency" class="segmentDisplay" data-segmentDisplay='{"value":"123.456", "pattern":"###.###"}'></canvas>
     </div>
     <div class="keypad-row">
         <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(4)">4</button>
         <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(5)">5</button>
         <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(6)">6</button>
-        <canvas id="keypad-frequencytype"></canvas>
+        <canvas id="keypadFrequencyType" class="segmentDisplay" data-segmentDisplay='{"value":"NAV1", "pattern":"#####", "segmentCount": 14}'></canvas>
     </div>
     <div class="keypad-row">
         <button type="button" class="keypad-key" onclick="$im.keypad.keyPressed(7)">7</button>

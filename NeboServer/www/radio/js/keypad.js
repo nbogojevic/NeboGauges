@@ -3,40 +3,29 @@ $im = $im || {};
 $im.keypad = {
 
     show: function(event) {
-        if ($("#keypad").length == 0) {
-            $im.template("templates/keypad.html", function (template) { $im.appendTemplate(template); }).then(function () { 
-                $im.keypad.display = $im.setupDisplay("keypad-enterfrequency", "###.###", "123.455")
-                $im.keypad.type = $im.setupDisplay("keypad-frequencytype", "#####", "NAV1", {segmentCount: 14})
-                $im.keypad.doShow(event) 
-            }); 
-        } else {
-            $im.keypad.doShow(event);
-        } 
-    },
-    doShow: function(event) {
         $im.keypad.updateEvent = event;
-        $im.keypad.type.colorOff = "#000";
+        $im.display.keypadFrequencyType.colorOff = "#000";
         $im.keypad.value = "";
         $im.keypad.mode = event.substring(0, 3).toUpperCase();
         $(".keypad-key").prop('disabled', false);
         if ($im.keypad.mode == "COM") {
             $im.keypad.name = event.substring(0, 4).toUpperCase();
-            $im.keypad.display.pattern = "###.##";
+            $im.display.keypadFrequency.pattern = "###.##";
             $im.keypad.value = "1";
         } else if ($im.keypad.mode == "NAV") {
             $im.keypad.name = event.substring(0, 4).toUpperCase();
-            $im.keypad.display.pattern = "###.##";        
+            $im.display.keypadFrequency.pattern = "###.##";        
             $im.keypad.value = "1";
         } else if ($im.keypad.mode == "ADF") {
             $im.keypad.name = event.substring(0, 3).toUpperCase();
-            $im.keypad.display.pattern = "####.#";
+            $im.display.keypadFrequency.pattern = "####.#";
         } else if ($im.keypad.mode == "XPN") {
             $im.keypad.name = "XPNDR";
-            $im.keypad.display.pattern = "####";
+            $im.display.keypadFrequency.pattern = "####";
             $(".keypad-no-xpdr").prop('disabled', true);
         }
-        $im.keypad.type.setValue($im.keypad.name);
-        $im.keypad.display.setValue($im.keypad.value);
+        $im.display.keypadFrequencyType.setValue($im.keypad.name);
+        $im.display.keypadFrequency.setValue($im.keypad.value);
         $("#keypad").show();
         $(".keypad-enter").prop('disabled', true);
     },
@@ -142,12 +131,12 @@ $im.keypad = {
             }
         }
         $im.keypad.value += key;
-        $im.keypad.display.setValue($im.keypad.value);
+        $im.display.keypadFrequency.setValue($im.keypad.value);
     },
 
     clearPressed: function() {
         $im.keypad.value = "";
-        $im.keypad.display.setValue($im.keypad.value);
+        $im.display.keypadFrequency.setValue($im.keypad.value);
     },
 
     closePressed: function () {

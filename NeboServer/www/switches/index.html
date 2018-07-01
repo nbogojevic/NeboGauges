@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <!-- Nebo Dashboard by Nenad Bogojevic. Published under GPLv3 License. -->
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Switches - Nebo</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <script src="../simulator.js"></script>
-    <script type="text/javascript" src="switches.js"></script> 
-    <link rel="stylesheet" type="text/css" href="switches.css" />
+    <head>
+        <meta charset="utf-8">
+        <title>Switches - Nebo</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="/simulator.js"></script>
+        <script type="text/javascript" src="switches.js"></script> 
+        <link rel="stylesheet" type="text/css" href="switches.css" />
     </head>
     <body>
         <table class="panel">
@@ -63,16 +62,17 @@
                 <td colspan=2>
                     <div id="MAGNETO" class="lock">
                         <img src="img/lock.svg" class="lock-image">
-                        <img src="img/key-off.svg" class="lock-image magneto-0">
-                        <img src="img/key-l.svg" class="lock-image magneto-2" style="display: none;">
-                        <img src="img/key-r.svg" class="lock-image magneto-1" style="display: none;">
-                        <img src="img/key-both.svg" class="lock-image magneto-3" style="display: none;">
-                        <img src="img/key-ignition.svg" class="lock-image magneto-4" style="display: none;">
+                        <img src="img/key-off.svg" class="lock-image ignition-key magneto-0">
+                        <img src="img/key-l.svg" class="lock-image ignition-key magneto-2" style="display: none;">
+                        <img src="img/key-r.svg" class="lock-image ignition-key magneto-1" style="display: none;">
+                        <img src="img/key-both.svg" class="lock-image ignition-key magneto-3" style="display: none;">
+                        <img src="img/key-ignition.svg" class="lock-image ignition-key magneto-4" style="display: none;">
                     </div>
                 </td> 
                 <td colspan=8>
                 </td> 
             </tr>
         </table>
+        <div id="gaugeSelector"></div>
     </body>
 </html>

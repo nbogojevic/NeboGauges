@@ -1,19 +1,24 @@
+@import url("/simulator.css");
+@import url("keypad.css");
+
 body {
     font-family: sans-serif;
     background: #444;
     margin: 0px;
 }
+
 .panel {
     width: 100%;
     font-family: sans-serif;
     background: linear-gradient(to bottom right, #666, #111);
 }
-.labels {
+
+.panel .labels {
     font-weight: bold;
     color: #eee;
 }
 
-.button {
+.panel .button {
     background-color:lightgrey; 
     color: #111;
     text-align: center;
@@ -28,7 +33,7 @@ body {
     margin: 1vw 1vw; 
 }
 
-.button.on {
+.panel .button.on {
     background-color: antiquewhite; 
 }
 
@@ -41,106 +46,7 @@ body {
     position: relative;
 }
 
-.display.dme {
-    background-color: #300;
-    border-style: inset;
-    border-color: #888;
-    min-height: 10vw;
-    width: 70vw;
-    margin-left: 5vw;
-}
-
-.display.adf {
-    background-color: #300;
-    border-style: inset;
-    border-color: #888;
-    min-height: 10vw;
-    width: 66vw;
-    margin-left: 5vw;
-    position: relative;
-}
-
-.display.com {
-    background-color: #300;
-    border-style: inset;
-    border-color: #888;
-    min-height: 10vw;
-    width: 94vw;
-    margin-left: 2vw;
-    margin-top: 1vw;
-}
-
-
-#adf {
-    position: absolute;
-    width: 30vw;
-    height: 10vw;
-    left: 10vw;
-    top: 0;
-}
-
-#xpdr {
-    position: absolute;
-    width: 30vw;
-    height: 10vw;
-    left: 20vw;
-    top: 0;
-}
-
-#dmespeed {
-    position: absolute;
-    width: 23vw;
-    height: 10vw;
-    left: 40vw;
-    top: 0;
-}
-
-#dmedist {
-    position: absolute;
-    width: 32vw;
-    height: 10vw;
-    left: 2vw;
-    top: 0;
-}
-
-.comact {
-    position: absolute;
-    top: 1vw;
-    left: 2vw;
-    width: 15vw;
-    height: 8vw;
-}
-.comstb {
-    position: absolute;
-    top: 1vw;
-    left: 22vw;
-    width: 15vw;
-    height: 8vw;
-}
-
-.navact {
-    position: absolute;
-    top: 1vw;
-    left: 50vw;
-    width: 15vw;
-    height: 8vw;
-}
-
-.navstb {
-    position: absolute;
-    top: 1vw;
-    left: 70vw;
-    width: 15vw;
-    height: 8vw;
-}
-
-.comm-knob {
+.panel .knob {
     width: 12vw;
-    cursor: pointer;
+    cursor: pointer;    
 }
-
-.xpdr-knob {
-    width: 12vw;
-    cursor: pointer;
-}
-

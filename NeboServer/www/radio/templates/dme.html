@@ -1,3 +1,35 @@
+<style>
+.display.dme {
+    background-color: #300;
+    border-style: inset;
+    border-color: #888;
+    min-height: 10vw;
+    width: 70vw;
+    margin-left: 5vw;
+}
+#dmespeed {
+    position: absolute;
+    width: 23vw;
+    height: 10vw;
+    left: 40vw;
+    top: 0;
+}
+
+#dmedist {
+    position: absolute;
+    width: 32vw;
+    height: 10vw;
+    left: 2vw;
+    top: 0;
+}
+.knob.dme {
+    width:10vw;
+}
+.switch.dme {
+    width:3vw;
+    cursor: pointer;
+}
+</style>
 <div class="panel">
     <table style="width:100%">
         <tr>
@@ -5,14 +37,14 @@
             <td colspan="2" class="labels" style="width:15vw"><center>DME</center></td>
         </tr>
         <tr>
-            <td style="width:80vw"><div class="display dme"><canvas id="dmedist"></canvas><canvas id="dmespeed"></canvas></div></td>
+            <td style="width:80vw"><div class="display dme"><canvas id="dmedist" class="segmentDisplay" data-segmentDisplay='{"value":"---.-NM", "pattern":"###.###", "segmentCount": 14, "digitHeight": 22}'></canvas><canvas id="dmespeed" class="segmentDisplay" data-segmentDisplay='{"value":"---KT", "pattern":"#####", "segmentCount": 14, "digitHeight": 19, "segmentWidth": 1.6, "digitWidth": 11}'></canvas></div></td>
             <td style="width:5vw;">
                 <center><span class="labels">1</span></center>  
-                <center><img onclick="$im.sendEvent('DME2_TOGGLE')" id="dmeswitch1" src="img/switch-dme-1.svg" style="width:3vw"><img onclick="$im.sendEvent('DME1_TOGGLE')" id="dmeswitch2" src="img/switch-dme-2.svg" style="width:3vw; display:none;"></center>
+                <center><img onclick="$im.sendEvent('DME2_TOGGLE')" id="dmeswitch1" src="img/switch-dme-1.svg" class="switch dme"><img onclick="$im.sendEvent('DME1_TOGGLE')" id="dmeswitch2" src="img/switch-dme-2.svg" class="switch dme" style="display:none"></center>
                 <center><span class="labels">2</span></center>
             </td>
             <td style="width:10vw;">
-                <img src="img/knob.svg" style="width:10vw">
+                <img src="img/knob.svg" class="knob dme">
             </td>
         </tr>
         <tr>

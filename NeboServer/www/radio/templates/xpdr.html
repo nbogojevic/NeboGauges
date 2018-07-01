@@ -1,3 +1,12 @@
+<style>
+canvas#xpdr {
+    position: absolute;
+    width: 30vw;
+    height: 9.5vw;
+    left: 20vw;
+    top: 0;
+}
+</style>
 <div class="panel">
     <table style="width:100%">
         <tr>
@@ -6,20 +15,20 @@
         </tr>
         <tr>
             <td rowspan="2" style="width:7vw; vertical-align: text-top; text-align: center; margin-top:1vw;"><button class="button">IDT</button></td>
-            <td colspan="9"><div class="display xpdr"><canvas id="xpdr"></canvas></div></td>
+            <td colspan="9"><div class="display xpdr"><canvas id="xpdr" class="segmentDisplay" data-segmentDisplay='{"value":"1234", "pattern":"####"}'></canvas></div></td>
             <td rowspan="2">
                 <table style="width:100%">
                     <tr>
                         <td colspan="2">
-                            <img src="img/knob.svg" class="xpdr-knob" onclick="$im.keypad.show('XPNDR_SET')">
+                            <img src="img/knob.svg" class="knob" onclick="$im.keypad.show('XPNDR_SET')">
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <button onclick="$im.xpdrBox.set('1200')" class="button">CLR</button>
+                            <button onclick="$im.xpdr.set('1200')" class="button">CLR</button>
                         </td>
                         <td>
-                            <button onclick="$im.xpdrBox.set('1200')" class="button">VFR</button>
+                            <button onclick="$im.xpdr.set('1200')" class="button">VFR</button>
                         </td>
                     </tr>
                 </table>
@@ -27,14 +36,14 @@
         </tr>
         <tr>
             <td colspan="9">
-                <button onclick="$im.xpdrBox.digit(0)" class="button">0</button>
-                <button onclick="$im.xpdrBox.digit(1)" class="button">1</button>
-                <button onclick="$im.xpdrBox.digit(2)" class="button">2</button>
-                <button onclick="$im.xpdrBox.digit(3)" class="button">3</button>
-                <button onclick="$im.xpdrBox.digit(4)" class="button">4</button>
-                <button onclick="$im.xpdrBox.digit(5)" class="button">5</button>
-                <button onclick="$im.xpdrBox.digit(6)" class="button">6</button>
-                <button onclick="$im.xpdrBox.digit(7)" class="button">7</button>
+                <button onclick="$im.xpdr.digit(0)" class="button">0</button>
+                <button onclick="$im.xpdr.digit(1)" class="button">1</button>
+                <button onclick="$im.xpdr.digit(2)" class="button">2</button>
+                <button onclick="$im.xpdr.digit(3)" class="button">3</button>
+                <button onclick="$im.xpdr.digit(4)" class="button">4</button>
+                <button onclick="$im.xpdr.digit(5)" class="button">5</button>
+                <button onclick="$im.xpdr.digit(6)" class="button">6</button>
+                <button onclick="$im.xpdr.digit(7)" class="button">7</button>
             </td>
         </tr>
     </table>
