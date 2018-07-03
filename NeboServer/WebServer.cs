@@ -11,7 +11,9 @@ namespace Nebo
 {
     internal class NeboServer : IDisposable
     {
-        private WebServer server;
+        private readonly WebServer server;
+
+        internal readonly List<string> ServerLinks = new List<string>();
 
         internal NeboServer(int port, string dir)
         {
@@ -24,6 +26,17 @@ namespace Nebo
             server.Module<WebApiModule>().RegisterController<PollingController>();
             server.Module<WebSocketsModule>().RegisterWebSocketsServer<GaugesWebSocketServer>("/_gauges");
             server.RunAsync();
+
+            // Find host by name
+            System.Net.IPHostEntry iphostentry = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
+
+            // Enumerate IP addresses
+            foreach (System.Net.IPAddress ipaddress in iphostentry.AddressList)
+            {
+                if (ipaddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork) {
+                    ServerLinks.Add($"http://{ipaddress}:{port}/");
+                }
+            }
         }
 
         public void Dispose()
@@ -31,6 +44,7 @@ namespace Nebo
             server.Dispose();
         }
     }
+
     internal class PollingController : WebApiController
     {
         private bool OutputResult(HttpListenerContext ctx, IPolling polling)
@@ -43,7 +57,7 @@ namespace Nebo
             }
             if (polling.Running && polling.Data != null)
             {
-                polling.Queried = true;
+                polling.Queried();
                 ctx.Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                 return ctx.JsonResponse(polling.Data);
             }
@@ -55,6 +69,7 @@ namespace Nebo
         }
 
         [WebApiHandler(HttpVerbs.Get, "/_status")]
+#pragma warning disable RCS1163 // Unused parameter.
         public bool Status(WebServer server, HttpListenerContext context)
         {
             return context.JsonResponse(new { connected = NeboContext.Instance.SimConnect != null });
@@ -80,6 +95,7 @@ namespace Nebo
 
         [WebApiHandler(HttpVerbs.Post, "/_event/{id}/{value}")]
         public bool Event(WebServer server, HttpListenerContext context, String id, uint value)
+#pragma warning restore RCS1163 // Unused parameter.
         {
             try
             {
@@ -109,6 +125,8 @@ namespace Nebo
 
     internal class GaugesWebSocketServer : WebSocketsServer
     {
+        private readonly Dictionary<DataRequests, HashSet<WebSocketContext>> subscribers = new Dictionary<DataRequests, HashSet<WebSocketContext>>();
+
         public GaugesWebSocketServer()
             : base(true, 0)
         {
@@ -119,6 +137,12 @@ namespace Nebo
                 NeboContext.Instance.Polling[v].Configure(this);
             }
         }
+
+        internal bool HasListeners(DataRequests request)
+        {
+            return subscribers[request].Count > 0;
+        }
+
         /// <summary>
         /// Called when this WebSockets Server receives a full message (EndOfMessage) form a WebSockets client.
         /// </summary>
@@ -135,6 +159,7 @@ namespace Nebo
                 NeboContext.Instance.Polling[feed].Start();
             }
         }
+
         /// <summary>
         /// Gets the name of the server.
         /// </summary>
@@ -145,7 +170,7 @@ namespace Nebo
         {
             get { return "Gauge Server"; }
         }
-        readonly Dictionary<DataRequests, HashSet<WebSocketContext>> subscribers = new Dictionary<DataRequests, HashSet<WebSocketContext>>();
+
         /// <summary>
         /// Called when this WebSockets Server accepts a new WebSockets client.
         /// </summary>
@@ -153,6 +178,7 @@ namespace Nebo
         protected override void OnClientConnected(WebSocketContext context)
         {
         }
+
         /// <summary>
         /// Called when this WebSockets Server receives a message frame regardless if the frame represents the EndOfMessage.
         /// </summary>
@@ -162,6 +188,7 @@ namespace Nebo
         protected override void OnFrameReceived(WebSocketContext context, byte[] rxBuffer, WebSocketReceiveResult rxResult)
         {
         }
+
         /// <summary>
         /// Called when the server has removed a WebSockets connected client for any reason.
         /// </summary>
@@ -174,15 +201,15 @@ namespace Nebo
             }
         }
 
-        internal void OnDataRequest(DataRequests feed, object data)
+        internal bool OnDataRequest(DataRequests feed, object data)
         {
             HashSet<WebSocketContext> existingSubscribers = subscribers[feed];
-            String json = Json.Serialize(new { feed = feed.ToString(), data = data });
+            String json = Json.Serialize(new { feed = feed.ToString(), data });
             foreach (var ctx in existingSubscribers)
             {
                 this.Send(ctx, json);
             }
+            return existingSubscribers.Count > 0;
         }
     }
-
 }

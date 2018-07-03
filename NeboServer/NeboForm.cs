@@ -5,27 +5,27 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using Microsoft.FlightSimulator.SimConnect;
-using System.Runtime.InteropServices;
-using Unosquare.Labs.EmbedIO;
-using Unosquare.Labs.EmbedIO.Modules;
-using Unosquare.Labs.EmbedIO.Constants;
+using QRCoder;
+using System.Drawing;
 
 namespace Nebo
 {
     public partial class NeboForm : Form
     {
-
         public NeboForm(int port, string dir)
         {
             InitializeComponent();
 
-            labelPort.Text = port.ToString();
             serverDirectory.Text = dir;
 
             NeboContext.Instance.WebServer = new NeboServer(port, dir);
+            serverLink.Text = NeboContext.Instance.WebServer.ServerLinks[0];
+
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(serverLink.Text, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            qrCodeBox.Image = qrCode.GetGraphic(20);
 
             NeboContext.Instance.ConnectToSim(Handle, Notify, () => reconnectTimer.Start());
         }
@@ -51,12 +51,12 @@ namespace Nebo
             notifyIconServer.Dispose();
         }
 
-        public void Notify(string s)
+        public void Notify(string s, ToolTipIcon icon = ToolTipIcon.None)
         {
             lastTimestamp.Text = DateTime.Now.ToString();
             if (lastStatus.Text != s)
             {
-                notifyIconServer.ShowBalloonTip(10, Application.ProductName, s, ToolTipIcon.Info);
+                notifyIconServer.ShowBalloonTip(10, Application.ProductName, s, icon);
             }
             lastStatus.Text = s;
         }
@@ -80,6 +80,15 @@ namespace Nebo
         private void NeboForm_Load(object sender, EventArgs e)
         {
         }
-    }
 
+        private void serverLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(serverLink.Text);
+        }
+
+        private void generateQRCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start($"http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl={System.Net.WebUtility.UrlEncode(serverLink.Text)}/&chld=H|0");
+        }
+    }
 }

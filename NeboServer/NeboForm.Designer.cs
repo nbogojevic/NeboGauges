@@ -30,25 +30,28 @@ namespace Nebo
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NeboForm));
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelLatest = new System.Windows.Forms.Label();
             this.reconnectTimer = new System.Windows.Forms.Timer(this.components);
             this.lastTimestamp = new System.Windows.Forms.Label();
             this.lastStatus = new System.Windows.Forms.Label();
             this.notifyIconServer = new System.Windows.Forms.NotifyIcon(this.components);
             this.labelListening = new System.Windows.Forms.Label();
-            this.labelPort = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelDirectory = new System.Windows.Forms.Label();
             this.serverDirectory = new System.Windows.Forms.Label();
+            this.serverLink = new System.Windows.Forms.LinkLabel();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.qrCodeBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.qrCodeBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // labelLatest
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(28, 63);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Latest state";
+            this.labelLatest.AutoSize = true;
+            this.labelLatest.Location = new System.Drawing.Point(28, 63);
+            this.labelLatest.Name = "labelLatest";
+            this.labelLatest.Size = new System.Drawing.Size(62, 13);
+            this.labelLatest.TabIndex = 4;
+            this.labelLatest.Text = "Latest state";
             // 
             // reconnectTimer
             // 
@@ -73,7 +76,7 @@ namespace Nebo
             this.lastStatus.ForeColor = System.Drawing.SystemColors.InfoText;
             this.lastStatus.Location = new System.Drawing.Point(28, 89);
             this.lastStatus.Name = "lastStatus";
-            this.lastStatus.Size = new System.Drawing.Size(337, 139);
+            this.lastStatus.Size = new System.Drawing.Size(337, 34);
             this.lastStatus.TabIndex = 6;
             // 
             // notifyIconServer
@@ -88,28 +91,18 @@ namespace Nebo
             this.labelListening.AutoSize = true;
             this.labelListening.Location = new System.Drawing.Point(28, 9);
             this.labelListening.Name = "labelListening";
-            this.labelListening.Size = new System.Drawing.Size(88, 13);
+            this.labelListening.Size = new System.Drawing.Size(67, 13);
             this.labelListening.TabIndex = 7;
-            this.labelListening.Text = "Listening on port:";
+            this.labelListening.Text = "Listening on:";
             // 
-            // labelPort
+            // labelDirectory
             // 
-            this.labelPort.AutoSize = true;
-            this.labelPort.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.labelPort.Location = new System.Drawing.Point(122, 9);
-            this.labelPort.Name = "labelPort";
-            this.labelPort.Size = new System.Drawing.Size(34, 13);
-            this.labelPort.TabIndex = 8;
-            this.labelPort.Text = "-8081";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(28, 36);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 13);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Serving directory:";
+            this.labelDirectory.AutoSize = true;
+            this.labelDirectory.Location = new System.Drawing.Point(28, 36);
+            this.labelDirectory.Name = "labelDirectory";
+            this.labelDirectory.Size = new System.Drawing.Size(89, 13);
+            this.labelDirectory.TabIndex = 9;
+            this.labelDirectory.Text = "Serving directory:";
             // 
             // serverDirectory
             // 
@@ -121,18 +114,48 @@ namespace Nebo
             this.serverDirectory.TabIndex = 10;
             this.serverDirectory.Text = "directory";
             // 
+            // serverLink
+            // 
+            this.serverLink.AutoSize = true;
+            this.serverLink.Location = new System.Drawing.Point(122, 9);
+            this.serverLink.Name = "serverLink";
+            this.serverLink.Size = new System.Drawing.Size(80, 13);
+            this.serverLink.TabIndex = 11;
+            this.serverLink.TabStop = true;
+            this.serverLink.Text = "http://localhost";
+            this.toolTip.SetToolTip(this.serverLink, "\r\nClick here to open Nebo Gauges in your default \r\nbrowser.\r\n\r\n");
+            this.serverLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.serverLink_LinkClicked);
+            // 
+            // toolTip
+            // 
+            this.toolTip.IsBalloon = true;
+            this.toolTip.ToolTipTitle = "Tip";
+            // 
+            // qrCodeBox
+            // 
+            this.qrCodeBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.qrCodeBox.Location = new System.Drawing.Point(64, 144);
+            this.qrCodeBox.Name = "qrCodeBox";
+            this.qrCodeBox.Size = new System.Drawing.Size(256, 256);
+            this.qrCodeBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.qrCodeBox.TabIndex = 13;
+            this.qrCodeBox.TabStop = false;
+            this.toolTip.SetToolTip(this.qrCodeBox, "\r\nYou can use this QR code to open the above link \r\non your device (smartphone, t" +
+        "ablet).\r\n\r\nScan this image with the your device\'s camera to \r\nopen the link.");
+            // 
             // NeboForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 256);
+            this.ClientSize = new System.Drawing.Size(392, 442);
+            this.Controls.Add(this.qrCodeBox);
+            this.Controls.Add(this.serverLink);
             this.Controls.Add(this.serverDirectory);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.labelPort);
+            this.Controls.Add(this.labelDirectory);
             this.Controls.Add(this.labelListening);
             this.Controls.Add(this.lastStatus);
             this.Controls.Add(this.lastTimestamp);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelLatest);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -142,21 +165,24 @@ namespace Nebo
             this.Text = "Nebo Server";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NeboForm_FormClosed);
             this.Load += new System.EventHandler(this.NeboForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.qrCodeBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelLatest;
         private System.Windows.Forms.Timer reconnectTimer;
         private System.Windows.Forms.Label lastTimestamp;
         private System.Windows.Forms.Label lastStatus;
         private System.Windows.Forms.NotifyIcon notifyIconServer;
         private System.Windows.Forms.Label labelListening;
-        private System.Windows.Forms.Label labelPort;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelDirectory;
         private System.Windows.Forms.Label serverDirectory;
+        private System.Windows.Forms.LinkLabel serverLink;
+        private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.PictureBox qrCodeBox;
     }
 }
 

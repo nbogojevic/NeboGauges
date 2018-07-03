@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using Microsoft.FlightSimulator.SimConnect;
 
 namespace Nebo
 {
-    enum DataDefinitions
+    internal enum DataDefinitions
     {
         Dashboard,
         Switches,
@@ -18,7 +19,7 @@ namespace Nebo
         Radio
     };
 
-    enum NeboEvents
+    internal enum NeboEvents
     {
         PANEL,
         STROBE,
@@ -91,7 +92,7 @@ namespace Nebo
         TRUE_AIRSPEED_CAL_DEC
     };
 
-    enum GROUP_PRIORITIES : uint
+    internal enum GROUP_PRIORITIES : uint
     {
         SIMCONNECT_GROUP_PRIORITY_HIGHEST = 1,
         SIMCONNECT_GROUP_PRIORITY_HIGHEST_MASKABLE = 10000000,
@@ -103,7 +104,7 @@ namespace Nebo
     // this is how you declare a data structure so that
     // simconnect knows how to fill it/read it.
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
-    struct Dashboard
+    internal struct Dashboard
     {
         // this is how you declare a fixed size string
         public float pitch;
@@ -123,7 +124,7 @@ namespace Nebo
     };
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
-    struct Switches
+    internal struct Switches
     {
         // this is how you declare a fixed size string
         public uint lights;
@@ -138,7 +139,7 @@ namespace Nebo
     };
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
-    struct Radio
+    internal struct Radio
     {
         public uint com1act;
         public uint com1stb;
@@ -164,27 +165,26 @@ namespace Nebo
         public int dmeselected;
     };
 
-    static class NeboSimConnectExtension
+    internal static class NeboSimConnectExtension
     {
-        internal static void Configure(this SimConnect simConnect, Action reconnect, Action<string> log)
+        internal static void Configure(this SimConnect simConnect, Action reconnect, Action<string, ToolTipIcon> log)
         {
             try
             {
                 // listen to connect and quit msgs
-                simConnect.OnRecvOpen += new SimConnect.RecvOpenEventHandler((sender, data) => log?.Invoke("Connected to flight simulator"));
+#pragma warning disable RCS1163 // Unused parameter.
+                simConnect.OnRecvOpen += new SimConnect.RecvOpenEventHandler((sender, data) => log?.Invoke("Connected to flight simulator", ToolTipIcon.Info));
                 simConnect.OnRecvQuit += new SimConnect.RecvQuitEventHandler((sender, data) =>
                 {
-                    log?.Invoke("Flight simulator has exited");
+                    log?.Invoke("Flight simulator has exited", ToolTipIcon.Info);
                     NeboContext.Instance.CloseConnection();
                     reconnect?.Invoke();
                 });
                 simConnect.OnRecvSystemState += new SimConnect.RecvSystemStateEventHandler((sender, data) => { });
 
                 // listen to exceptions
-                simConnect.OnRecvException += new SimConnect.RecvExceptionEventHandler((sender, data) =>
-                {
-                    log?.Invoke($"Exception received from flight simulator { Enum.GetName(typeof(SIMCONNECT_EXCEPTION), (SIMCONNECT_EXCEPTION)data.dwException) }");
-                });
+                simConnect.OnRecvException += new SimConnect.RecvExceptionEventHandler((sender, data) => log?.Invoke($"Exception received from flight simulator { Enum.GetName(typeof(SIMCONNECT_EXCEPTION), (SIMCONNECT_EXCEPTION)data.dwException) }", ToolTipIcon.Warning));
+#pragma warning restore RCS1163 // Unused parameter.
                 // define a data structure
                 simConnect.AddToDataDefinition(DataDefinitions.Dashboard, "PLANE PITCH DEGREES", "Radians", SIMCONNECT_DATATYPE.FLOAT32, 0.0f, SimConnect.SIMCONNECT_UNUSED);
                 simConnect.AddToDataDefinition(DataDefinitions.Dashboard, "PLANE BANK DEGREES", "Radians", SIMCONNECT_DATATYPE.FLOAT32, 0.0f, SimConnect.SIMCONNECT_UNUSED);
@@ -312,11 +312,10 @@ namespace Nebo
 
                 // Configure all polling
                 NeboContext.Instance.Polling.ForEach(p => p.Configure(simConnect));
-
             }
             catch (COMException ex)
             {
-                log?.Invoke($"Exception occured while connecting to simulator {ex.Message}");
+                log?.Invoke($"Exception occured while connecting to simulator {ex.Message}", ToolTipIcon.Warning);
                 reconnect?.Invoke();
             }
         }
