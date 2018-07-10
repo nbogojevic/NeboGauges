@@ -71,10 +71,10 @@ namespace Nebo
 
         private void notifyIconServer_Click(object sender, EventArgs e)
         {
-            this.Activate();
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
-            this.Focus();
+            Activate();
+            Show();
+            WindowState = FormWindowState.Normal;
+            Focus();
         }
 
         private void NeboForm_Load(object sender, EventArgs e)
@@ -84,11 +84,6 @@ namespace Nebo
         private void serverLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(serverLink.Text);
-        }
-
-        private void generateQRCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start($"http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl={System.Net.WebUtility.UrlEncode(serverLink.Text)}/&chld=H|0");
         }
     }
 }

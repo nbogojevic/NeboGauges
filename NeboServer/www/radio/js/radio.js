@@ -26,15 +26,15 @@ $.extend($im, {
             if ($im.display.xpdr !== undefined) {
                 $im.display.xpdr.setValue($im.xpdr.code(data.transponder));
             }
-            if (!!$im.display.configuration.dme) {
+            if (!!$im.display.dme) {
                 $("#dmeswitch1").toggle(data.dmeselected != 2);
                 $("#dmeswitch2").toggle(data.dmeselected == 2);
             }
-            if (!!$im.display.configuration.comm1) {
-                $im.display.onCommData(1, data);
+            if (!!$im.display.com1act) {
+                $im.radio.onCommData(1, data);
             }
-            if (!!$im.display.configuration.comm2) {
-                $im.display.onCommData(2, data);
+            if (!!$im.display.com2act) {
+                $im.radio.onCommData(2, data);
             }
         }
     },

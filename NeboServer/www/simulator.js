@@ -5,32 +5,37 @@ Nebo Dashboard by Nenad Bogojevic. Published under GPLv3 License.
 
 var $im = {
     _wakeLockEnabled: false,
+    _noSleepSetUp: false,
 
     continueReady: function() {
         $.holdReady(false);
     },
     initNoSleep: function () {
-        $im.noSleep = new NoSleep();
+        if (!$im._noSleepSetUp) {
+            $im.noSleep = new NoSleep();
 
-        var toggleEl = $(".disable-lock");
-        if (toggleEl.length !== 0) {
-            toggleEl.click(function() {
-                if (!$im._wakeLockEnabled) {
-                    $im.noSleep.enable(); // keep the screen on!
-                    $im._wakeLockEnabled = true;
-                } else {
-                    $im.noSleep.disable(); // let the screen turn off.
-                    $im._wakeLockEnabled = false;
-                }
-            });
-        }    
+            var toggleEl = $(".disable-lock");
+            if (toggleEl.length !== 0) {
+                $im._noSleepSetUp = true;
+                toggleEl.click(function() {
+                    if (!$im._wakeLockEnabled) {
+                        $im.noSleep.enable(); // keep the screen on!
+                        toggleEl.text("ENABLE SCREEN LOCK");
+                        $im._wakeLockEnabled = true;
+                    } else {
+                        $im.noSleep.disable(); // let the screen turn off.
+                        toggleEl.text("DISABLE SCREEN LOCK");
+                        $im._wakeLockEnabled = false;
+                    }
+                });
+            }    
+        }
     },
     
     start: function (options) {
         options = options || {};
 
         if (!options.static) {        
-            $im.initNoSleep();
             $im.initWebsocket(options);
         }
         $(".nebo-template").each(function () {
@@ -53,7 +58,8 @@ var $im = {
                 }
             });
         });
-        $("#gaugeSelector").load("/navigation.html");
+        $("#gaugeSelector").load("/navigation.html", function() { $im.initNoSleep(); });
+
     },
 
     loadScript: function (script, check, init) {
@@ -71,10 +77,6 @@ var $im = {
     
     initWebsocket: function (options) {
         $im.subscriptions = options.subscriptions || $im.subscriptions || {};
-        $im.loadScript("/js/reconnecting-websocket.js", function() { return typeof ReconnectingWebSocket !== "undefined"; }, $im._initWebsocket);
-    },
-    
-    _initWebsocket: function () {
         $im.websocket = new ReconnectingWebSocket("ws://"+location.host+"/_gauges", null, {reconnectInterval: 1000, maxReconnectInterval: 10000});
         $im.websocket.onopen = function (event) { 
             $('#disconnectedSplash').hide();
@@ -114,16 +116,7 @@ var $im = {
         display.draw();
         display.setValue(options.value || "");
         return display;
-    },
-    appendTemplate(template) {
-        $("body").append(template);
-    },
-    template: function(url, fn) {
-        return $.get(url, (template) => {
-            fn(template);
-        });
-
-    },    
+    }
 }
 
 $im.loadScript("/js/NoSleep.min.js", function() { return typeof NoSleep; });
